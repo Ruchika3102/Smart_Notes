@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Notes - Final Year</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* CSS Variables for Theme (Same as semester 1) */
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --accent-lemon: #e8f442;
+            --lemon-glow: #d4e635;
+            --pure-white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #888888;
+            --dark-gray: #333333;
+            --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+            --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Navigation (Same as semester 1) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            color: #ffff80;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-lemon);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-lemon);
+        }
+
+        .nav-link.cta {
+            background: var(--gradient-lemon);
+            color: var(--primary-black);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .nav-link.cta:hover {
+            color: var(--primary-black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .profile-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            /* border: 2px solid rgba(232, 244, 66, 0.3); */
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-img:hover {
+            border-color: var(--accent-lemon);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Header (Same as semester 1) */
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2rem;
+        }
+
+        /* Search Bar */
+        .search-section {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(232, 244, 66, 0.3);
+            border-radius: 50px;
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--accent-lemon);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .search-bar input::placeholder {
+            color: #aaaaaa;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient-lemon);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--primary-black);
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Subject Grid */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .subject-card {
+            background: linear-gradient(135deg, rgba(232, 244, 66, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(232, 244, 66, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 244, 66, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .subject-card:hover::before {
+            left: 100%;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-lemon);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .subject-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-lemon);
+        }
+
+        .subject-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        .subject-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .notes-count {
+            background: var(--gradient-lemon);
+            color: var(--primary-black);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(232, 244, 66, 0.05);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-radius: 30px;
+            border: 1px solid rgba(232, 244, 66, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--accent-lemon);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        /* No Results */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .no-results h3 {
+            color: var(--accent-lemon);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-results p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-results .suggestions {
+            color: var(--accent-lemon);
+            font-weight: 500;
+        }
+
+        /* Clear Search Button */
+        .clear-search {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            color: var(--accent-lemon);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .clear-search:hover {
+            background: rgba(232, 244, 66, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .page-header {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+                letter-spacing: 3px;
+            }
+
+            .subject-card {
+                padding: 1.5rem;
+            }
+
+            .subject-icon {
+                font-size: 2.5rem;
+            }
+
+            .stat-item h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation (Same as semester 1) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="profilelogo.png" class="logo">Smart Notes</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-menu">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+                <li><a href="create.html" class="nav-link">Create</a></li>
+                <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+                <li>
+                    <a href="profile.html">
+                        <img src="profilelogo.png" alt="Profile" class="profile-img">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header (Same as semester 1) -->
+    <div class="page-header">
+        <h1>Final Year Notes</h1>
+        <p class="subtitle">Comprehensive study materials for your final year examinations</p>
+        
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for subjects, topics, or specific notes...">
+                <button class="search-btn">🔍</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="subjects-grid">
+            <div class="subject-card" onclick="openSubject('computer-science')">
+                <div class="subject-icon">💻</div>
+                <h3>Computer Science</h3>
+                <p>Data Structures, Algorithms, DBMS, Operating Systems, Software Engineering</p>
+                <span class="notes-count">156 Notes</span>
+            </div>
+
+            <div class="subject-card" onclick="openSubject('electronics')">
+                <div class="subject-icon">⚡</div>
+                <h3>Electronics Engineering</h3>
+                <p>Digital Electronics, Microprocessors, VLSI Design, Communication Systems</p>
+                <span class="notes-count">134 Notes</span>
+            </div>
+
+            <div class="subject-card" onclick="openSubject('mechanical')">
+                <div class="subject-icon">⚙️</div>
+                <h3>Mechanical Engineering</h3>
+                <p>Thermodynamics, Fluid Mechanics, Machine Design, Manufacturing</p>
+                <span class="notes-count">142 Notes</span>
+            </div>
+
+            <div class="subject-card" onclick="openSubject('civil')">
+                <div class="subject-icon">🏗️</div>
+                <h3>Civil Engineering</h3>
+                <p>Structural Analysis, Concrete Technology, Transportation, Geotechnical</p>
+                <span class="notes-count">128 Notes</span>
+            </div>
+
+            <div class="subject-card" onclick="openSubject('electrical')">
+                <div class="subject-icon">🔌</div>
+                <h3>Electrical Engineering</h3>
+                <p>Power Systems, Control Systems, Electrical Machines, Power Electronics</p>
+                <span class="notes-count">145 Notes</span>
+            </div>
+
+            <div class="subject-card" onclick="openSubject('mathematics')">
+                <div class="subject-icon">📐</div>
+                <h3>Applied Mathematics</h3>
+                <p>Calculus, Linear Algebra, Statistics, Numerical Methods, Discrete Math</p>
+                <span class="notes-count">98 Notes</span>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>800+</h3>
+                    <p>Study Notes</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Subjects Covered</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10K+</h3>
+                    <p>Students Helped</p>
+                </div>
+                <!-- <div class="stat-item">
+                    <h3>95%</h3>
+                    <p>Success Rate</p>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        const searchBtn = document.querySelector('.search-btn');
+
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (query) {
+                // Hide all subject cards first
+                const subjectCards = document.querySelectorAll('.subject-card');
+                subjectCards.forEach(card => {
+                    card.style.display = 'none';
+                });
+
+                // Show matching cards
+                let foundResults = false;
+                subjectCards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    if (cardText.includes(query)) {
+                        card.style.display = 'block';
+                        foundResults = true;
+                    }
+                });
+
+                // Show message if no results found
+                if (!foundResults) {
+                    showNoResults(query);
+                } else {
+                    removeNoResults();
+                }
+
+                // Add clear search button
+                addClearButton();
+            }
+        }
+
+        function showNoResults(query) {
+            removeNoResults(); // Remove existing message
+            const container = document.querySelector('.subjects-grid');
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.innerHTML = `
+                <h3>No Results Found</h3>
+                <p>No notes found for "${query}". Try searching for:</p>
+                <p class="suggestions">Computer Science, Electronics, Mechanical, Civil, Electrical, Mathematics</p>
+            `;
+            container.appendChild(noResults);
+        }
+
+        function removeNoResults() {
+            const existing = document.querySelector('.no-results');
+            if (existing) {
+                existing.remove();
+            }
+        }
+
+        function addClearButton() {
+            // Remove existing clear button
+            const existingClear = document.querySelector('.clear-search');
+            if (existingClear) {
+                existingClear.remove();
+            }
+
+            // Add new clear button
+            const searchBar = document.querySelector('.search-bar');
+            const clearBtn = document.createElement('button');
+            clearBtn.className = 'clear-search';
+            clearBtn.innerHTML = '✕';
+            
+            clearBtn.addEventListener('click', clearSearch);
+            searchBar.appendChild(clearBtn);
+        }
+
+        function clearSearch() {
+            // Clear input
+            searchInput.value = '';
+            
+            // Show all cards
+            const subjectCards = document.querySelectorAll('.subject-card');
+            subjectCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Remove no results message
+            removeNoResults();
+            
+            // Remove clear button
+            const clearBtn = document.querySelector('.clear-search');
+            if (clearBtn) {
+                clearBtn.remove();
+            }
+        }
+
+        // Subject card click handler
+        function openSubject(subject) {
+            alert(`Opening ${subject} notes section...\n\nThis would typically navigate to the subject-specific page.`);
+            // In a real application, this would navigate to the subject page
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Add loading animation to subject cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

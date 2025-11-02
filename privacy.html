@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Notes - Privacy Policy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables for Theme (Same as semester 1) */
+    :root {
+      --primary-black: #0a0a0a;
+      --secondary-black: #1a1a1a;
+      --accent-lemon: #e8f442;
+      --lemon-glow: #d4e635;
+      --pure-white: #ffffff;
+      --light-gray: #f5f5f5;
+      --medium-gray: #888888;
+      --dark-gray: #333333;
+      --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+      --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+      --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--primary-black);
+      color: var(--pure-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+
+    /* Navigation (Same as semester 1) */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 5px;
+      color: #ffff80;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-lemon);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--pure-white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-lemon);
+    }
+
+    .nav-link.cta {
+      background: var(--gradient-lemon);
+      color: var(--primary-black);
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .nav-link.cta:hover {
+      color: var(--primary-black);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .profile-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      /* border: 2px solid rgba(232, 244, 66, 0.3); */
+      transition: border-color 0.3s ease;
+    }
+
+    .profile-img:hover {
+      border-color: var(--accent-lemon);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--pure-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Header (Same as semester 1) */
+    .page-header {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+      position: relative;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      pointer-events: none;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-header .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(232, 244, 66, 0.1);
+      border: 1px solid rgba(232, 244, 66, 0.3);
+      color: var(--accent-lemon);
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin: 1rem 0 2rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Privacy Content */
+    .privacy-content {
+      background: var(--secondary-black);
+      border-radius: 20px;
+      padding: 3rem;
+      border: 1px solid rgba(232, 244, 66, 0.2);
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .privacy-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(232, 244, 66, 0.05), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .privacy-content:hover::before {
+      left: 100%;
+    }
+
+    .privacy-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--accent-lemon);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .privacy-content h2::before {
+      content: '';
+      width: 4px;
+      height: 30px;
+      background: var(--gradient-lemon);
+      border-radius: 2px;
+    }
+
+    .privacy-content p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .privacy-content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .privacy-content li {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+    }
+
+    .privacy-content li::marker {
+      color: var(--accent-lemon);
+    }
+
+    .privacy-content a {
+      color: var(--accent-lemon);
+      text-decoration: underline;
+      transition: all 0.3s ease;
+    }
+
+    .privacy-content a:hover {
+      color: var(--lemon-glow);
+      text-shadow: 0 0 10px rgba(232, 244, 66, 0.5);
+    }
+
+    .privacy-content b {
+      color: var(--accent-lemon);
+      font-weight: 600;
+    }
+
+    /* Agreement Section */
+    .agreement-section {
+      background: linear-gradient(135deg, rgba(232, 244, 66, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
+      border: 2px solid rgba(232, 244, 66, 0.3);
+      border-radius: 25px;
+      padding: 3rem;
+      text-align: center;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agreement-section::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      right: 2rem;
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    .agreement-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+    }
+
+    .agreement-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2.5rem;
+    }
+
+    .agreement-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      min-width: 150px;
+    }
+
+    .btn-agree {
+      background: var(--gradient-lemon);
+      color: var(--primary-black);
+      border: none;
+    }
+
+    .btn-agree:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-disagree {
+      background: transparent;
+      color: var(--pure-white);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-disagree:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--pure-white);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--secondary-black);
+      border-top: 1px solid rgba(232, 244, 66, 0.2);
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-text {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-lemon);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .page-header {
+        padding: 3rem 1rem 2rem;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .privacy-content {
+        padding: 2rem;
+      }
+
+      .agreement-section {
+        padding: 2rem;
+      }
+
+      .agreement-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 0 1rem;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+      }
+    }
+
+    /* Scroll animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .privacy-content {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation (Same as semester 1) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Smart Notes</a>
+      <button class="mobile-menu-btn">☰</button>
+      <ul class="nav-menu">
+        <li><a href="home.html" class="nav-link">Home</a></li>
+        <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+        <li><a href="create.html" class="nav-link">Create</a></li>
+        <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+        <li>
+          <a href="profile.html">
+            <img src="profilelogo.png" alt="Profile" class="profile-img">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header (Same as semester 1) -->
+  <div class="page-header">
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">This Privacy Policy explains how Smart Notes collects, uses, and protects your data when you use our website and services.</p>
+    <div class="hero-badge">Last updated: September 5, 2025</div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Privacy Content Sections -->
+    <div class="privacy-content">
+      <h2>Who we are</h2>
+      <p>
+        <b>Smart Notes</b> is an educational platform designed to help learners organize and manage study resources effectively. 
+        We are committed to protecting your privacy and ensuring your data is handled with the utmost care.
+      </p>
+      <p>
+        You can contact us at <a href="mailto:Technocrafters2gmail.com">Technocrafters2gmail.com</a> for any privacy-related concerns.
+      </p>
+    </div>
+
+    <div class="privacy-content">
+      <h2>Information we collect</h2>
+      <p>To provide you with the best possible experience on Smart Notes, we collect the following types of information:</p>
+      <ul>
+        <li><b>Account Information:</b> Your name, email address, and securely hashed password</li>
+        <li><b>Content Data:</b> Notes, uploaded files, and study materials you create or share</li>
+        <li><b>Usage Analytics:</b> Device type, browser information, and platform activity logs</li>
+        <li><b>Cookies & Preferences:</b> Used for maintaining login sessions, theme preferences, and analytics</li>
+      </ul>
+    </div>
+
+    <div class="privacy-content">
+      <h2>How we use your information</h2>
+      <p>Your information helps us deliver and improve our services in the following ways:</p>
+      <ul>
+        <li>Provide and continuously improve Smart Notes features and functionality</li>
+        <li>Personalize your study experience based on your preferences and usage patterns</li>
+        <li>Ensure the security and integrity of our platform and user data</li>
+        <li>Communicate important updates, security alerts, and platform improvements</li>
+      </ul>
+    </div>
+
+    <div class="privacy-content">
+      <h2>How we protect your data</h2>
+      <p>
+        We implement industry-standard security measures to protect your personal information and study materials. 
+        This includes end-to-end encryption, secure server infrastructure, multi-factor authentication, and strict access controls 
+        to ensure only authorized personnel can access user data when necessary for platform maintenance.
+      </p>
+    </div>
+
+    <div class="privacy-content">
+      <h2>Your rights and control</h2>
+      <p>You have full control over your data on Smart Notes. Your rights include:</p>
+      <ul>
+        <li>Request access to all data we have stored about you</li>
+        <li>Update, modify, or delete your account information at any time</li>
+        <li>Export all your notes and study materials in standard formats</li>
+        <li>Opt out of promotional emails and disable non-essential cookies</li>
+        <li>Request complete account deletion with all associated data</li>
+      </ul>
+    </div>
+
+    <div class="privacy-content">
+      <h2>Changes to this policy</h2>
+      <p>
+        We may periodically update this Privacy Policy to reflect changes in our practices, legal requirements, or platform features. 
+        When we make significant changes, we will notify you through the platform, email, or by posting a notice on our website. 
+        We encourage you to review this policy regularly to stay informed about how we protect your privacy.
+      </p>
+    </div>
+
+    <!-- Agreement Section -->
+    <div class="agreement-section">
+      <h3 class="agreement-title">Do you agree to our Privacy Policy?</h3>
+      <p class="agreement-subtitle">
+        By continuing to use Smart Notes, you acknowledge that you have read, understood, and agree to our Privacy Policy.
+      </p>
+      <div class="agreement-buttons">
+        <button id="agreeBtn" class="btn btn-agree">I Agree & Continue</button>
+        <button id="disagreeBtn" class="btn btn-disagree">I Need More Info</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-text">©️ <span id="year"></span> Smart Notes. All rights reserved. Your Learning, Our Mission.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="termsservices.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Agreement buttons
+    document.getElementById('agreeBtn').addEventListener('click', () => {
+      const button = document.getElementById('agreeBtn');
+      const originalText = button.textContent;
+      
+      button.textContent = '✓ Thank you!';
+      button.style.background = 'linear-gradient(135deg, #2ed573, #26d0ce)';
+      
+      setTimeout(() => {
+        alert('🎉 Thank you for agreeing to our Privacy Policy! You will now be redirected to our Terms & Conditions.');
+        window.location.href = "termsservices.html";
+      }, 1000);
+    });
+
+    document.getElementById('disagreeBtn').addEventListener('click', () => {
+      alert('⚠ You must agree to our Privacy Policy to continue using Smart Notes. Please contact us if you have any concerns.');
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+      } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.navbar')) {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Add scroll animation to sections
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.privacy-content').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>

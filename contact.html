@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Smart Notes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+      background: linear-gradient(135deg, #ffff80, #fffaaf);
+      color: #000;
+      position: relative;
+    }
+
+    header .logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+header .logo img {
+  width: 50px;  /* adjust size as you like */
+  height: auto;
+  border-radius: 8px; /* optional: makes edges smooth */
+}
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #333;
+    }
+
+    .contact-details {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      text-align: center;
+      padding: 50px 20px;
+      background: #111;
+      border-top: 3px solid #ffff80;
+      border-bottom: 3px solid #ffff80;
+    }
+
+    .contact-details div {
+      margin: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-details div:hover {
+      transform: translateY(-5px);
+    }
+
+    .contact-details strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: #ffff80;
+    }
+
+    .socials {
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .socials a {
+      text-decoration: none;
+      font-size: 22px;
+      background: #222;
+      color: #ffff80;
+      padding: 14px;
+      border-radius: 50%;
+      margin: 0 10px;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(255, 255, 128, 0.3);
+    }
+
+    .socials a:hover {
+      background: #ffff80;
+      color: #000;
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(255, 255, 128, 0.6);
+    }
+
+    .form-section {
+      padding: 60px 20px 80px;
+      max-width: 750px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .form-section h2 {
+      color: #ffff80;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ffff80;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 22px;
+      border: none;
+      border-radius: 10px;
+      background: #222;
+      color: #fff;
+      font-size: 15px;
+      transition: 0.3s;
+      box-shadow: inset 0 0 8px rgba(255, 255, 128, 0.2);
+    }
+
+    form input:focus, form textarea:focus {
+      outline: 2px solid #ffff80;
+      background: #1a1a1a;
+      box-shadow: 0 0 12px rgba(255, 255, 128, 0.5);
+    }
+
+    form button {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #ffff80;
+      background: transparent;
+      color: #ffff80;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(255, 255, 128, 0.3);
+    }
+
+    form button:hover {
+      background: #ffff80;
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(255, 255, 128, 0.6);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 13px;
+      color: #aaa;
+      border-top: 1px solid #222;
+      background: #0a0a0a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="home.html" class="logo">
+    <img src="home.png" alt="Home Logo">
+  </a>
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you! Whether you have questions, feedback, or suggestions, 
+       reach out and we’ll get back to you as soon as possible.</p>
+  </header>
+
+  <section class="contact-details">
+    <div>
+      <strong>📍 Address</strong>
+      Chitkara University, Rajpura, India
+    </div>
+    <div>
+      <strong>📞 Phone</strong>
+      +91 98765 43210
+    </div>
+    <div>
+      <strong>📧 Email</strong>
+      TechnoCrafters@gmail.com
+    </div>
+  </section>
+
+  <!-- <div class="socials">
+    <a href="#">🌐</a>
+    <a href="#">📘</a>
+    <a href="#">🐦</a>
+    <a href="#">📸</a>
+  </div> -->
+
+  <section class="form-section">
+    <h2>Send Us a Message</h2>
+    <form>
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required>
+
+      <label for="email">Your Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="5" placeholder="Write your message..." required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    ©️ 2025 Smart Notes | All Rights Reserved
+  </footer>
+
+</body>
+</html>

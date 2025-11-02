@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - Smart Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables for Theme */
+    :root {
+      --primary-black: #0a0a0a;
+      --secondary-black: #1a1a1a;
+      --accent-lemon: #e8f442;
+      --lemon-glow: #d4e635;
+      --pure-white: #ffffff;
+      --light-gray: #f5f5f5;
+      --medium-gray: #888888;
+      --dark-gray: #333333;
+      --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+      --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+      --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--primary-black);
+      color: var(--pure-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 5px;
+      color: #ffff80;;
+      text-decoration: none;
+      position: relative;
+      
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-lemon);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--pure-white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-lemon);
+    }
+
+    .nav-link.cta {
+      background: var(--gradient-lemon);
+      color: var(--primary-black);
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .nav-link.cta:hover {
+      color: var(--primary-black);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Page Header */
+    .page-header {
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+      position: relative;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      pointer-events: none;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Terms Content */
+    .terms-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+    }
+
+    .terms-section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(232, 244, 66, 0.2);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .terms-section:hover {
+      border-color: var(--accent-lemon);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .terms-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-lemon);
+    }
+
+    .terms-section h3 {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 1rem;
+      color: var(--pure-white);
+    }
+
+    .terms-section p, .terms-section ul {
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .terms-section ul {
+      padding-left: 1.5rem;
+    }
+
+    .terms-section li {
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight {
+      background: rgba(232, 244, 66, 0.1);
+      border-left: 3px solid var(--accent-lemon);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 5px 5px 0;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary-black);
+      border-top: 1px solid rgba(232, 244, 66, 0.2);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-lemon);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Responsive */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--pure-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .terms-content {
+        padding: 1rem 1rem 3rem;
+      }
+
+      .terms-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="home.html" class="logo">Smart Notes</a>
+      <button class="mobile-menu-btn">☰</button>
+      <ul class="nav-menu">
+        <li><a href="home.html" class="nav-link">Home</a></li>
+        <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+        <li><a href="create.html" class="nav-link">Create</a></li>
+        <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+        <li>
+          <a href="profile.html">
+            <img src="profilelogo.png" alt="Profile" 
+                 style="width:30px; height:30px; border-radius:50%;">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Terms of Service</h1>
+    <p>Last updated: January 15, 2025</p>
+  </section>
+
+  <!-- Terms Content -->
+  <div class="terms-content">
+    <div class="terms-section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using Smart Notes ("the Platform"), you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>2. User Accounts</h2>
+      <p>To access certain features of the Platform, you may be required to create an account. You are responsible for:</p>
+      <ul>
+        <li>Maintaining the confidentiality of your account information</li>
+        <li>All activities that occur under your account</li>
+        <li>Providing accurate and complete information when creating an account</li>
+        <li>Notifying us immediately of any unauthorized use of your account</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>3. User Content</h2>
+      <p>Smart Notes allows users to post, upload, and share academic notes and materials ("Content"). By submitting Content to the Platform, you:</p>
+      <ul>
+        <li>Grant Smart Notes a worldwide, non-exclusive, royalty-free license to use, reproduce, and distribute your Content</li>
+        <li>Represent that you own or have the necessary rights to share the Content</li>
+        <li>Agree that Content will be appropriately attributed to you</li>
+      </ul>
+      
+      <div class="highlight">
+        <p><strong>Important:</strong> You retain all ownership rights to your original Content. However, by sharing it on Smart Notes, you allow other users to view, download, and use your Content for academic purposes.</p>
+      </div>
+    </div>
+
+    <div class="terms-section">
+      <h2>4. Prohibited Content</h2>
+      <p>You agree not to post Content that:</p>
+      <ul>
+        <li>Violates any copyright, trademark, or intellectual property rights</li>
+        <li>Is defamatory, obscene, or offensive</li>
+        <li>Contains malicious code or viruses</li>
+        <li>Promotes academic dishonesty (e.g., complete assignment solutions intended to be submitted as one's own work)</li>
+        <li>Contains personal information of others without consent</li>
+        <li>Is commercial in nature (advertisements, promotional materials)</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>5. Intellectual Property</h2>
+      <p>The Smart Notes platform, its original content, features, and functionality are owned by Smart Notes and are protected by international copyright, trademark, and other intellectual property laws.</p>
+      <p>All academic materials shared by educational institutions and professors remain the property of their respective owners. Smart Notes serves as a platform for sharing these materials for educational purposes under fair use principles.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>6. Copyright Policy</h2>
+      <p>Smart Notes respects the intellectual property rights of others and expects users to do the same. We respond to notices of alleged copyright infringement that comply with applicable law.</p>
+      <p>If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement, please provide our copyright agent with the following information:</p>
+      <ul>
+        <li>A physical or electronic signature of the copyright owner or authorized person</li>
+        <li>Identification of the copyrighted work claimed to have been infringed</li>
+        <li>Identification of the material that is claimed to be infringing</li>
+        <li>Your contact information</li>
+        <li>A statement that you have a good faith belief that use of the material is not authorized</li>
+        <li>A statement that the information in the notification is accurate</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>7. Account Termination</h2>
+      <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason, including without limitation if you breach the Terms. Upon termination, your right to use the Platform will immediately cease.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>8. Limitation of Liability</h2>
+      <p>In no event shall Smart Notes, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
+      <ul>
+        <li>Your access to or use of or inability to access or use the Platform</li>
+        <li>Any conduct or content of any third party on the Platform</li>
+        <li>Any content obtained from the Platform</li>
+        <li>Unauthorized access, use or alteration of your transmissions or content</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>9. Changes to Terms</h2>
+      <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>10. Contact Us</h2>
+      <p>If you have any questions about these Terms, please contact us at:</p>
+      <p>Email: legal@smartnotes.com<br>
+      Address: 123 Education Street, Academic City, AC 12345</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">Smart Notes</div>
+      <p class="footer-text">Empowering students with accessible, high-quality academic resources.</p>
+      
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="termsservices.html">Terms of Service</a>
+        <a href="#">Support</a>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>©️ 2025 Smart Notes. All rights reserved. Your Learning, Our Mission.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+      } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+      }
+    });
+  </script>
+</body>
+</html>

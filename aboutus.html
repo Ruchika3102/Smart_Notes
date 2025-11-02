@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Smart Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Theme (Same as semester 1) */
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --accent-lemon: #e8f442;
+            --lemon-glow: #d4e635;
+            --pure-white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #888888;
+            --dark-gray: #333333;
+            --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+            --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Navigation (Same as semester 1) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            color: #ffff80;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-lemon);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-lemon);
+        }
+
+        .nav-link.cta {
+            background: var(--gradient-lemon);
+            color: var(--primary-black);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .nav-link.cta:hover {
+            color: var(--primary-black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .profile-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            /* border: 2px solid rgba(232, 244, 66, 0.3); */
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-img:hover {
+            border-color: var(--accent-lemon);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Header (Same as semester 1) */
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Original About Us Content Styles */
+        a {
+            text-decoration: none;
+            color: #ffff80;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* Section styling */
+        .section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .section img {
+            flex: 1 1 400px;
+            max-width: 100%;
+            border-radius: 15px;
+            margin-right: 40px;
+        }
+
+        .section .content {
+            flex: 1 1 500px;
+        }
+
+        .section .content h2 {
+            font-size: 2rem;
+            color: #ffff80;
+            margin-bottom: 20px;
+        }
+
+        .section .content p {
+            font-size: 1rem;
+            color: #ffff80;
+            margin-bottom: 15px;
+        }
+
+        /* Highlight boxes */
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+
+        .highlight-box {
+            background-color: #ffff80;
+            padding: 20px;
+            border-radius: 15px;
+            flex: 1 1 250px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .highlight-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .highlight-box h3 {
+            color: #fac906;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .highlight-box p {
+            color: black;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f9f948;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .page-header {
+                padding: 3rem 1rem 2rem;
+            }
+        }
+
+        /* Responsive */
+        @media(max-width: 768px){
+            .section {
+                flex-direction: column;
+            }
+
+            .section img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (Same as semester 1) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Smart Notes</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-menu">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+                <li><a href="create.html" class="nav-link">Create</a></li>
+                <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+                <li>
+                    <a href="profile.html">
+                        <img src="profilelogo.png" alt="Profile" class="profile-img">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header (Same as semester 1) -->
+    <div class="page-header">
+        <h1>About SmartNotes</h1>
+        <p class="subtitle">Your ultimate platform for university notes, videos, and resources.</p>
+    </div>
+
+    <!-- Original About Us Content -->
+    <div class="container">
+        <!-- Our Mission Section -->
+        <div class="section">
+            <img src="https://unmistakablecreative.com/wp-content/uploads/2023/09/Smart-Notes-Infographic-607x1024-1.png" alt="Mission Image">
+            <div class="content">
+                <h2>Our Mission</h2>
+                <p>At SmartNotes, we aim to make learning easier for university students by providing comprehensive notes, video tutorials, and resource links in one convenient place.</p>
+                <p>We focus on quality, clarity, and easy accessibility, ensuring that students can excel in their courses effortlessly.</p>
+            </div>
+        </div>
+
+        <!-- Our Vision Section -->
+        <div class="section">
+            <div class="content">
+                <h2>Our Vision</h2>
+                <p>We envision a world where students can access all educational materials online, anytime, anywhere, without any barriers.</p>
+                <p>SmartNotes strives to be the go-to platform for academic excellence, helping students save time while learning efficiently.</p>
+            </div>
+            <img src="https://i.pinimg.com/originals/df/10/5f/df105f43e6d5ceac6b7774edbc40de7f.gif" height="1000px" width="600px" alt="Vision Image">
+        </div>
+       <br>
+       <div class="section">
+            <img src="https://www.slideteam.net/media/catalog/product/cache/1280x720/o/u/our_mission_and_vision_statement_web_design_company_profile_ppt_professional_graphics_example_slide01.jpg" width="1150px">
+            <div class="content">
+                <h2>What We Offer</h2>
+                <p>SmartNotes provides:</p>
+                <ul>
+                    <li>Comprehensive notes for various subjects and courses.</li>
+                    <li>Step-by-step video tutorials to help understand complex topics.</li>
+                    <li>Curated resource links including past papers, e-books, and reference materials.</li>
+                </ul>
+                <p>Our platform is designed to enhance your learning experience and help you achieve academic success.</p>
+            </div>
+        </div>
+
+        <!-- Highlights -->
+        <div class="highlights">
+            <div class="highlight-box">
+                <h3>Comprehensive Notes</h3>
+                <p>Well-structured notes for all major subjects and courses.</p>
+            </div>
+            <div class="highlight-box">
+                <h3>Video Tutorials</h3>
+                <p>Step-by-step video guides to help you understand complex topics.</p>
+            </div>
+            <div class="highlight-box">
+                <h3>Resource Links</h3>
+                <p>Access useful references, past papers, and e-books in one place.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 SmartNotes. All rights reserved.
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

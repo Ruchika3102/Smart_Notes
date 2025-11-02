@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Notes - All Semesters</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --accent-lemon: #e8f442;
+            --lemon-glow: #d4e635;
+            --pure-white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #888888;
+            --dark-gray: #333333;
+            --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+            --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --sem1-color: white;
+            --sem2-color: white;
+            --sem3-color: white;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px;
+            /* Account for fixed navbar */
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            color: var(--accent-lemon);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-lemon);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-lemon);
+        }
+
+        .nav-link.cta {
+            background: var(--gradient-lemon);
+            color: var(--primary-black);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .nav-link.cta:hover {
+            color: var(--primary-black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .profile-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            /* border: 2px solid rgba(232, 244, 66, 0.3); */
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-img:hover {
+            border-color: var(--accent-lemon);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Semester Cards */
+        .semester-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .semester-card {
+            background: linear-gradient(135deg, rgba(232, 244, 66, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(232, 244, 66, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .semester-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 244, 66, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .semester-card:hover::before {
+            left: 100%;
+        }
+
+        .semester-card:hover {
+            border-color: var(--accent-lemon);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .semester-card.sem1 {
+            border-top: 5px solid var(--sem1-color);
+        }
+
+        .semester-card.sem2 {
+            border-top: 5px solid var(--sem2-color);
+        }
+
+        .semester-card.sem3 {
+            border-top: 5px solid var(--sem3-color);
+        }
+
+        .semester-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .semester-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--pure-white);
+        }
+
+        .semester-icon {
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .semester-card.active .semester-icon {
+            transform: rotate(180deg);
+        }
+
+        .semester-subjects {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .semester-card.active .semester-subjects {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Subject Buttons */
+        .subject-btn {
+            width: 100%;
+            background: rgba(232, 244, 66, 0.05);
+            border: 1px solid rgba(232, 244, 66, 0.2);
+            color: var(--pure-white);
+            padding: 1rem;
+            margin: 0.8rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-lemon);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .subject-btn:hover::before {
+            transform: scaleY(1);
+        }
+
+        .subject-btn:hover {
+            background: rgba(232, 244, 66, 0.1);
+            border-color: var(--accent-lemon);
+            color: var(--accent-lemon);
+            transform: translateX(10px);
+            padding-left: 1.5rem;
+        }
+
+        /* Chapters */
+        .chapters {
+            margin-top: 0.5rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .chapters a {
+            display: block;
+            background: rgba(232, 244, 66, 0.03);
+            border: 1px solid rgba(232, 244, 66, 0.1);
+            padding: 0.8rem 1.2rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-decoration: none;
+            color: var(--pure-white);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapters a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gradient-lemon);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .chapters a:hover::before {
+            transform: scaleY(1);
+        }
+
+        .chapters a:hover {
+            background: rgba(232, 244, 66, 0.08);
+            border-color: var(--accent-lemon);
+            color: var(--accent-lemon);
+            transform: translateX(5px);
+            padding-left: 1.5rem;
+        }
+
+        .chapters a::after {
+            content: '→';
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .chapters a:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .semester-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .page-header {
+                padding: 3rem 1rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Smart Notes</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-menu">
+                <li><a href="home.html" class="nav-link">Home</a></li>
+                <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+                <li><a href="create.html" class="nav-link">Create</a></li>
+                <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+              <li>
+        <a href="profile.html">
+          <img src="profilelogo.png" alt="Profile" 
+               style="width:30px; height:30px; border-radius:50%;">
+        </a>
+      </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <!-- <h1>Smart Notes</h1> -->
+        <p class="subtitle">"We’ve uploaded the best study resources, so you don’t have to search "</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="semester-cards">
+            <!-- Semester 1 Card -->
+            <div class="semester-card sem1" onclick="toggleSemester(this)">
+                <div class="semester-header">
+                    <h2 class="semester-title">Semester 1</h2>
+                    <i class="fas fa-chevron-down semester-icon"></i>
+                </div>
+                
+                
+                <div class="semester-subjects">
+                    <!-- Python Programming -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'python')">
+                        Python Programming
+                    </button>
+                    <div id="python" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/python/lmns-python-programming/#introduction-to-python"
+                            target="_blank">Chapter 1: Introduction To Python</a>
+                        <a href="https://www.geeksforgeeks.org/python/lmns-python-programming/#variables" target="_blank">Chapter 2:
+                            Variables</a>
+                        <a href="https://www.geeksforgeeks.org/python/lmns-python-programming/#data-types" target="_blank">Chapter
+                            3: Data Types</a>
+                        <a href="https://www.geeksforgeeks.org/python/lmns-python-programming/#input-and-output"
+                            target="_blank">Chapter 4: Input And Output</a>
+                        <a href="https://www.geeksforgeeks.org/python/lmns-python-programming/#operators" target="_blank">Chapter 5:
+                            Operators</a>
+                        <a href="https://cwh-full-next-space.fra1.cdn.digitaloceanspaces.com/notes/Python_Complete_Notes.pdf"
+                            target="_blank">HandWritten Notes for Python</a>
+                        <a href="https://www.geeksforgeeks.org/python/python-quizzes/" target="_blank">Short Quiz</a>
+                    </div>
+
+                    <!-- DECA -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'deca')">
+                        DECA (Digital Electronics)
+                    </button>
+                    <div id="deca" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/digital-logic/what-is-digital-logic/" target="_blank">Chapter 1:
+                            Introduction</a>
+                        <a href="https://www.geeksforgeeks.org/digital-logic/number-system-and-base-conversions/"
+                            target="_blank">Chapter 2: Number System and Representation</a>
+                        <a href="https://www.geeksforgeeks.org/digital-logic/logic-gates/" target="_blank">Chapter 3: Logic
+                            Gates</a>
+                        <a href="https://www.geeksforgeeks.org/digital-logic/boolean-algebra/" target="_blank">Chapter 4: Boolean
+                            Algebra</a>
+                        <a href="https://www.geeksforgeeks.org/digital-logic/lmn-digital-electronics/" target="_blank">Last Minute
+                            Notes For Exams</a>
+                        <a href="https://www.geeksforgeeks.org/quizzes/digital-logic-number-representation-gq/"
+                            target="_blank">Short Quiz</a>
+                    </div>
+
+                    <!-- FEE-I -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'fee1')">
+                        FEE - I (Frontend Engineering)
+                    </button>
+                    <div id="fee1" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/html/html-complete-guide/" target="_blank">Full Guide For HTML</a>
+                        <a href="https://cwh-full-next-space.fra1.cdn.digitaloceanspaces.com/notes/HTML_Complete_Notes.pdf"
+                            target="_blank">Handwritten Notes For HTML</a>
+                        <a href="https://www.geeksforgeeks.org/css/css-complete-guide/" target="_blank">Full Guide For CSS</a>
+                        <a href="https://cwh-full-next-space.fra1.cdn.digitaloceanspaces.com/notes/CSS_Complete_Notes.pdf"
+                            target="_blank">HandWritten Notes For CSS</a>
+                        <a href="https://www.geeksforgeeks.org/quizzes/html-course-practice-quiz-1/" target="_blank">Short Quiz</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semester 2 Card -->
+            <div class="semester-card sem2" onclick="toggleSemester(this)">
+                <div class="semester-header">
+                    <h2 class="semester-title">Semester 2</h2>
+                    <i class="fas fa-chevron-down semester-icon"></i>
+                </div>
+                
+                
+                <div class="semester-subjects">
+                    <!-- C Programming -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'cprog')">C Programming</button>
+                    <div id="cprog" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/c/c-language-introduction/" target="_blank">Chapter 1: Introduction To C</a>
+                        <a href="https://www.geeksforgeeks.org/c/variables-in-c/" target="_blank">Chapter 2: Variables and Constants</a>
+                        <a href="https://www.geeksforgeeks.org/c/data-types-in-c/" target="_blank">Chapter 3: Data Types</a>
+                        <a href="https://www.geeksforgeeks.org/c/operators-in-c/" target="_blank">Chapter 4: Operators</a>
+                        <a href="https://www.geeksforgeeks.org/cpp/decision-making-c-cpp/" target="_blank">Chapter 5: Control Statements</a>
+                        <a href="https://cwh-full-next-space.fra1.cdn.digitaloceanspaces.com/notes/C_Complete_Notes.pdf" target="_blank">Handwritten Notes</a>
+                        <a href="https://www.w3schools.com/c/c_quiz.php" target="_blank">Short Quiz</a>
+                    </div>
+
+                    <!-- SCM -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'scm')">SCM (Source Code Management)</button>
+                    <div id="scm" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/git/git-introduction/" target="_blank">Chapter 1: Introduction To Git</a>
+                        <a href="https://www.geeksforgeeks.org/git/basic-git-commands-with-examples/" target="_blank">Chapter 2: Git Commands</a>
+                        <a href="https://www.geeksforgeeks.org/git/branching-strategies-in-git/" target="_blank">Chapter 3: Git Branch</a>
+                        <a href="https://www.geeksforgeeks.org/git/git-merge/" target="_blank">Chapter 4: Git Merge</a>
+                        <a href="https://www.w3schools.com/git/git_quiz.asp" target="_blank">Short Quiz</a>
+                    </div>
+
+                    <!-- CASA -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'casa')">CASA (Computer Aided System Analysis)</button>
+                    <div id="casa" class="chapters">
+                        <a href="file:///C:/Users/LENOVO/Downloads/CASA%20UNIT%201,2,3.ppt.pdf" target="_blank">Complete Guide</a>
+                        <a href="file:///C:/Users/LENOVO/Downloads/Fourier%20Series.pdf" target="_blank">Fourier Series</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semester 3 Card -->
+            <div class="semester-card sem3" onclick="toggleSemester(this)">
+                <div class="semester-header">
+                    <h2 class="semester-title">Semester 3</h2>
+                    <i class="fas fa-chevron-down semester-icon"></i>
+                </div>
+                
+                
+                <div class="semester-subjects">
+                    <!-- FEE-II -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'fee2')">FEE - II (Frontend Engineering Advanced)</button>
+                    <div id="fee2" class="chapters">
+                        <a href="https://web.dev/learn/html" target="_blank">Complete Guide of HTML</a>
+                        <a href="https://web.dev/learn/css" target="_blank">Complete Guide of CSS</a>
+                        <a href="https://web.dev/learn/javascript" target="_blank">Complete Guide of JavaScript</a>
+                        <a href="https://www.w3schools.com/js/js_quiz.asp" target="_blank">Short Quiz for JavaScript</a>
+                    </div>
+
+                    <!-- DSOOPS -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'dsoops')">DSOOPS (Data Structures & OOP)</button>
+                    <div id="dsoops" class="chapters">
+                        <a href="https://www.geeksforgeeks.org/cpp/cpp-programming-intro/" target="_blank">Chapter 1: Introduction to C++</a>
+                        <a href="https://www.geeksforgeeks.org/cpp/cpp-variables/" target="_blank">Chapter 2: Variables and Constants</a>
+                        <a href="https://www.geeksforgeeks.org/cpp/cpp-data-types/" target="_blank">Chapter 3: Data Types and Literals</a>
+                        <a href="https://www.geeksforgeeks.org/cpp/operators-in-cpp/" target="_blank">Chapter 4: Operators</a>
+                        <a href="Complete_CPP_Notes.pdf" target="_blank">HandWritten Notes For C++</a>
+                        <a href="OOPS_Notes.pdf" target="_blank">HandWritten Notes For OOPs</a>
+                        <a href="https://www.geeksforgeeks.org/quizzes/oop-concepts-gq/" target="_blank">Short Quiz</a>
+                    </div>
+
+                    <!-- ES & IoT -->
+                    <button class="subject-btn" onclick="toggleSubject(event, 'es_iot')">ES & IoT (Embedded Systems & IoT)</button>
+                    <div id="es_iot" class="chapters">
+                        <a href="Unit1_Embedded_System.pdf" target="_blank">Unit 1: Introduction to Embedded System</a>
+                        <a href="Unit2_Microcontrollers.pdf" target="_blank">Unit 2: Microcontrollers and Programming</a>
+                        <a href="Unit3_Introduction_to_IoT.pdf" target="_blank">Unit 3: Introduction to IoT</a>
+                        <a href="Unit4_Arduino.pdf" target="_blank">Unit 4: Arduino and Programming</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Toggle Semester
+        function toggleSemester(card) {
+            // Close other semesters
+            document.querySelectorAll('.semester-card').forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('active');
+                }
+            });
+            
+            // Toggle current semester
+            card.classList.toggle('active');
+            
+            // Close all subjects when toggling semester
+            document.querySelectorAll('.chapters').forEach(c => {
+                c.style.display = "none";
+            });
+        }
+
+        // Toggle Subject
+        function toggleSubject(event, subId) {
+            // Stop event propagation to prevent semester toggle
+            event.stopPropagation();
+            
+            // Hide all chapters
+            document.querySelectorAll('.chapters').forEach(c => {
+                if (c.id !== subId) {
+                    c.style.display = "none";
+                }
+            });
+
+            // Show selected subject's chapters
+            const targetElement = document.getElementById(subId);
+            if (targetElement.style.display === "block") {
+                targetElement.style.display = "none";
+            } else {
+                targetElement.style.display = "block";
+            }
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
