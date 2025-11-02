@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Notes - Your Academic Success Partner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables for Theme */
+    :root {
+      --primary-black: #0a0a0a;
+      --secondary-black: #1a1a1a;
+      --accent-lemon: #e8f442;
+      --lemon-glow: #d4e635;
+      --pure-white: #ffffff;
+      --light-gray: #f5f5f5;
+      --medium-gray: #888888;
+      --dark-gray: #333333;
+      --gradient-lemon: linear-gradient(135deg, #e8f442 0%, #d4e635 100%);
+      --shadow-glow: 0 0 20px rgba(232, 244, 66, 0.3);
+      --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--primary-black);
+      color: var(--pure-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232, 244, 66, 0.2);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 5px;
+      color: #ffff80;;
+      text-decoration: none;
+      position: relative;
+      
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-lemon);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--pure-white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-lemon);
+    }
+
+    .nav-link.cta {
+      background: var(--gradient-lemon);
+      color: var(--primary-black);
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+    }
+
+    .nav-link.cta:hover {
+      color: var(--primary-black);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(232, 244, 66, 0.05) 0%, var(--primary-black) 70%);
+      padding: 0 2rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(232,244,66,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(232, 244, 66, 0.1);
+      border: 1px solid rgba(232, 244, 66, 0.3);
+      color: var(--accent-lemon);
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-lemon) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+
+    .search-box {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(232, 244, 66, 0.3);
+      border-radius: 50px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .search-box:hover,
+    .search-box:focus-within {
+      border-color: var(--accent-lemon);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      color: var(--pure-white);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .search-btn {
+      background: var(--gradient-lemon);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-black);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-lemon);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 2rem;
+      background: var(--secondary-black);
+      position: relative;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(232, 244, 66, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(232, 244, 66, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-lemon);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-lemon);
+      border-radius: 15px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary-black);
+    }
+
+    .feature-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+    }
+
+    .feature-description {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    /* Categories Section */
+    .categories {
+      padding: 6rem 2rem;
+      background: var(--primary-black);
+    }
+
+    .categories-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .category-card {
+      background: linear-gradient(135deg, rgba(232, 244, 66, 0.05) 0%, rgba(26, 26, 26, 0.8) 100%);
+      border: 1px solid rgba(232, 244, 66, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card::after {
+      content: '→';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: var(--accent-lemon);
+      font-size: 1.2rem;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-lemon);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .category-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--pure-white);
+      margin-bottom: 0.8rem;
+    }
+
+    .category-description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 6rem 2rem;
+      background: var(--secondary-black);
+      text-align: center;
+    }
+
+    .cta-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--pure-white);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--gradient-lemon);
+      color: var(--primary-black);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--pure-white);
+      border-color: rgba(232, 244, 66, 0.5);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(232, 244, 66, 0.1);
+      border-color: var(--accent-lemon);
+      color: var(--accent-lemon);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary-black);
+      border-top: 1px solid rgba(232, 244, 66, 0.2);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-lemon);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Responsive */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--pure-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .search-box {
+        flex-direction: column;
+        border-radius: 15px;
+      }
+
+      .search-btn {
+        border-radius: 0 0 15px 15px;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">Smart Notes</a>
+      <button class="mobile-menu-btn">☰</button>
+      <ul class="nav-menu">
+        <li><a href="home.html" class="nav-link">Home</a></li>
+        <li><a href="uploaded.html" class="nav-link">Uploaded Notes</a></li>
+        <li><a href="create.html" class="nav-link">Create</a></li>
+        <li><a href="loginsignup.html" class="nav-link cta">Login/Signup</a></li>
+        <!-- <li><a href = "profile.html" class ="nav-link cta">profile</a></li> -->
+        <!-- <img src="profilelogo.png" alt="Profile" style="width:30px; height:30px; border-radius:50%;"> -->
+         <li>
+        <a href="profile.html">
+          <img src="profilelogo.png" alt="Profile" 
+               style="width:30px; height:30px; border-radius:50%;">
+        </a>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🎓 Your Academic Success Partner</div>
+      <h1>Find the Notes You Need</h1>
+      <p class="hero-subtitle">Search and access comprehensive notes from all subjects in one elegant, organized platform designed for academic excellence.</p>
+      
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="Search notes, subjects, courses, or topics...">
+          <button class="search-btn">Search</button>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">10K+</span>
+          <span class="stat-label">Notes Available</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Subjects Covered</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5K+</span>
+          <span class="stat-label">Students Helped</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features-container">
+      <div class="section-header">
+        <h2 class="section-title">Why Choose Smart Notes?</h2>
+        <p class="section-subtitle">Experience the future of academic note-taking with our comprehensive platform designed for modern students.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3 class="feature-title">Comprehensive Library</h3>
+          <p class="feature-description">Access thousands of high-quality notes across all academic subjects, from basic concepts to advanced topics.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3 class="feature-title">Smart Search</h3>
+          <p class="feature-description">Find exactly what you need with our intelligent search that understands context and academic terminology.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3 class="feature-title">Community Driven</h3>
+          <p class="feature-description">Learn from the best students and contribute your own knowledge to help others succeed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories">
+    <div class="categories-container">
+      <div class="section-header">
+        <h2 class="section-title">Browse by Semester</h2>
+        <p class="section-subtitle">Organized content tailored to your academic journey, from freshman year to graduation.</p>
+      </div>
+      
+      <div class="categories-grid">
+        <a href="sem1.html" class="category-card">
+          <h3 class="category-title">Semester 1</h3>
+          <p class="category-description">Foundation courses and introductory subjects to start your academic journey strong.</p>
+        </a>
+        
+        <a href="sem2.html" class="category-card">
+          <h3 class="category-title">Semester 2</h3>
+          <p class="category-description">Build upon your knowledge with intermediate concepts and practical applications.</p>
+        </a>
+        
+        <a href="sem3.html" class="category-card">
+          <h3 class="category-title">Semester 3</h3>
+          <p class="category-description">Advanced topics and specialized subjects to deepen your expertise.</p>
+        </a>
+        
+        <!-- <a href="#" class="category-card">
+          <h3 class="category-title">Semester 4</h3>
+          <p class="category-description">Complex theories and research-oriented materials for academic mastery.</p>
+        </a> -->
+        
+        <a href="finalyear.html" class="category-card">
+          <h3 class="category-title">Final Year</h3>
+          <p class="category-description">Capstone projects, thesis preparation, and career-focused materials.</p>
+        </a>
+        
+        <!-- <a href="#" class="category-card">
+          <h3 class="category-title">All Subjects</h3>
+          <p class="category-description">Browse our complete collection across all academic disciplines and levels.</p>
+        </a> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2 class="cta-title">Ready to Excel in Your Studies?</h2>
+      <p class="cta-subtitle">Join thousands of students who have transformed their academic performance with Smart Notes.</p>
+      
+      <div class="cta-buttons">
+        <a href="uploaded.html" class="btn btn-primary">Start Learning Now</a>
+        <a href="uploaded.html" class="btn btn-secondary">Explore Notes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">Smart Notes</div>
+      <p class="footer-text">Empowering students with accessible, high-quality academic resources.</p>
+      
+      <div class="footer-links">
+        <a href="aboutus.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="termsservices.html">Terms of Service</a>
+        <a href="support.html">Support</a>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>©️ 2025 Smart Notes. All rights reserved. Your Learning, Our Mission..</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+
+    searchBtn.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        alert(`Searching for: "${query}"\nThis would redirect to search results page.`);
+      }
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+      } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+      }
+    });
+  </script>
+</body>
+</html>
